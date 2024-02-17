@@ -1,0 +1,122 @@
+apiVersion: skaffold/v4beta8
+kind: Config
+
+.COMMON_ARTIFACTS:
+  ARTIFACTS_DEFINITION:
+    - &INTERNAL
+      image: rishabh75/template-internal
+      context: ..\..\server\
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.main
+    - &EMAIL
+      image: rishabh75/template-email
+      context: ../../server/
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.email
+    - &CRON
+      image: rishabh75/template-email-cron
+      context: ../../server/
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.cron
+    - &CLIENT
+      image: rishabh75/template-client
+      context: ../../client/
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.client
+    - &CLIENT-PROD
+      image: rishabh75/template-client-prod
+      context: ../../client/
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.client-prod
+  COMMON_ARTIFACTSETS:
+    DEFAULT_ARTIFACTS: &DEFAULT_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT
+    DEV_ARTIFACTS: &DEV_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT
+    PROD_ARTIFACTS: &PROD_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT-PROD
+
+# Default Deployment
+build: &DEFAULT_BUILD
+  local:
+    push: false
+  artifacts: *DEFAULT_ARTIFACTS
+manifests:
+  rawYaml:
+    - ../k8s/common/*
+    - ../k8s/dev/*
+deploy: &DEFAULT_DEPLOY
+  statusCheckDeadlineSeconds: 900
+  kubectl: {}
+
+profiles:
+  - name: dev
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        - ../k8s/dev/*
+    deploy:
+      kubectl: { defaultNamespace: template-dev }
+    build:
+      local:
+        push: false
+      artifacts: *DEV_ARTIFACTS
+
+  - name: prod
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        - ../k8s/prod/*
+    deploy:
+      kubectl: { defaultNamespace: template-prod }
+    build:
+      local:
+        push: true
+      tagPolicy:
+        gitCommit: {}
+        # dateTime: {}
+      artifacts: *PROD_ARTIFACTS
+
+  - name: server
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        # - ../k8s/certificate/*
+        - ../k8s/server/*
+    deploy:
+      kubectl: { defaultNamespace: template-prod }
+    build:
+      local:
+        push: true
+      tagPolicy:
+        gitCommit: {}
+      artifacts: *PROD_ARTIFACTS

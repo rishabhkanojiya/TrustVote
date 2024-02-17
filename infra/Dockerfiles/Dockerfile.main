@@ -1,0 +1,14 @@
+FROM node:14-alpine
+
+RUN mkdir /srv/be-template
+WORKDIR /srv/be-template
+
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+
+COPY . .
+
+RUN echo "Running Main Dockerfile"
+CMD ["sh", "-c", "node index.js"]
+# CMD ["sh", "-c", "npm run migrate && node index.js"]
