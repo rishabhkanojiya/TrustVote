@@ -6,9 +6,9 @@ WORKDIR /srv/be-service-voting
 COPY ./requirements.txt .
 RUN pip install -r ./requirements.txt
 
-EXPOSE 5000
+EXPOSE 9069
 
 COPY . .
 
-RUN echo "Running Main Dockerfile"
+RUN echo "Running Voting Dockerfile"
 CMD ["python", "app.py"]

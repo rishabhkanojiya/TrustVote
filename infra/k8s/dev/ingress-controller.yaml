@@ -26,7 +26,7 @@ spec:
               service:
                 name: voting-svc
                 port:
-                  number: 5000
+                  number: 9069
           - path: /?(.*)
             pathType: ImplementationSpecific
             backend:

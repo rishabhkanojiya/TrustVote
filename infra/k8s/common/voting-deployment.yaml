@@ -37,5 +37,5 @@ spec:
   ports:
     - name: voting
       protocol: TCP
-      port: 5000
-      targetPort: 5000
+      port: 9069
+      targetPort: 9069
