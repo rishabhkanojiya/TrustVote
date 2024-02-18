@@ -6,9 +6,13 @@ WORKDIR /srv/be-service-voting
 COPY ./requirements.txt .
 RUN pip install -r ./requirements.txt
 
-EXPOSE 9069
+RUN pip install uwsgi
 
+# Copy the rest of your application's necessary files
 COPY . .
 
-RUN echo "Running Voting Dockerfile"
-CMD ["python", "app.py"]
+EXPOSE 9069
+
+ENV NAME World
+
+CMD ["uwsgi", "--ini", "uwsgi.ini"]

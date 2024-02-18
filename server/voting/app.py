@@ -13,31 +13,31 @@ app = Flask(__name__)
 CORS(app)
 
 
-# # Connect to PostgreSQL
-# def connect_db():
-#     try:
-#         conn = psycopg2.connect(postgres_uri)
-#         print("Connected to the database successfully.")
-#         return conn
-#     except psycopg2.OperationalError as e:
-#         print(f"Unable to connect to the database. Error: {e}")
-#         raise e
+# Connect to PostgreSQL
+def connect_db():
+    try:
+        conn = psycopg2.connect(postgres_uri)
+        print("Connected to the database successfully.")
+        return conn
+    except psycopg2.OperationalError as e:
+        print(f"Unable to connect to the database. Error: {e}")
+        raise e
 
 
-# # Initialize the database table
-# def init_db():
-#     conn = connect_db()
-#     cursor = conn.cursor()
-#     cursor.execute(
-#         """
-#         CREATE TABLE IF NOT EXISTS tasks (
-#             id SERIAL PRIMARY KEY,
-#             description TEXT NOT NULL
-#         )
-#     """
-#     )
-#     conn.commit()
-#     conn.close()
+# Initialize the database table
+def init_db():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tasks (
+            id SERIAL PRIMARY KEY,
+            description TEXT NOT NULL
+        )
+    """
+    )
+    conn.commit()
+    conn.close()
 
 
 # Home route to display tasks
@@ -63,7 +63,7 @@ def index():
 # Run the application
 if __name__ == "__main__":
     # Initialize the database
-    # init_db()
+    init_db()
 
     # Run the Flask app
     app.run(port=9069)
