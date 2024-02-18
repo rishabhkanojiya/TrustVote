@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: internal
-          image: rishabh75/template-internal
+          image: rishabh75/e-voting-internal
           envFrom:
             - configMapRef:
                 name: internal-config

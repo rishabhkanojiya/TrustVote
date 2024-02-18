@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - name: email-cron
-              image: rishabh75/template-email-cron
+              image: rishabh75/e-voting-email-cron
               envFrom:
                 - configMapRef:
                     name: internal-config

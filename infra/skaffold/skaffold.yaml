@@ -4,8 +4,8 @@ kind: Config
 .COMMON_ARTIFACTS:
   ARTIFACTS_DEFINITION:
     - &INTERNAL
-      image: rishabh75/template-internal
-      context: ..\..\server\
+      image: rishabh75/e-voting-internal
+      context: ../../server/auth
       sync:
         manual:
           - src: src/**/*.js
@@ -13,8 +13,8 @@ kind: Config
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.main
     - &EMAIL
-      image: rishabh75/template-email
-      context: ../../server/
+      image: rishabh75/e-voting-email
+      context: ../../server/auth
       sync:
         manual:
           - src: src/**/*.js
@@ -22,8 +22,8 @@ kind: Config
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.email
     - &CRON
-      image: rishabh75/template-email-cron
-      context: ../../server/
+      image: rishabh75/e-voting-email-cron
+      context: ../../server/auth
       sync:
         manual:
           - src: src/**/*.js
@@ -31,7 +31,7 @@ kind: Config
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.cron
     - &CLIENT
-      image: rishabh75/template-client
+      image: rishabh75/e-voting-client
       context: ../../client/
       sync:
         manual:
@@ -40,7 +40,7 @@ kind: Config
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.client
     - &CLIENT-PROD
-      image: rishabh75/template-client-prod
+      image: rishabh75/e-voting-client-prod
       context: ../../client/
       sync:
         manual:
@@ -85,7 +85,7 @@ profiles:
         - ../k8s/common/*
         - ../k8s/dev/*
     deploy:
-      kubectl: { defaultNamespace: template-dev }
+      kubectl: { defaultNamespace: e-voting-dev }
     build:
       local:
         push: false
@@ -97,10 +97,10 @@ profiles:
         - ../k8s/common/*
         - ../k8s/prod/*
     deploy:
-      kubectl: { defaultNamespace: template-prod }
+      kubectl: { defaultNamespace: e-voting-prod }
     build:
       local:
-        push: true
+        push: false
       tagPolicy:
         gitCommit: {}
         # dateTime: {}
@@ -113,7 +113,7 @@ profiles:
         # - ../k8s/certificate/*
         - ../k8s/server/*
     deploy:
-      kubectl: { defaultNamespace: template-prod }
+      kubectl: { defaultNamespace: e-voting-prod }
     build:
       local:
         push: true

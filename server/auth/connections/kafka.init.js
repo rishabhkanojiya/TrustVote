@@ -7,7 +7,7 @@ const logger = require("../logger");
 CompressionCodecs[CompressionTypes.LZ4] = new LZ4().codec;
 
 const kafkaConfig = {
-    clientId: `be-template-${conf.get("mode")}-${conf.get("consumerType")}`,
+    clientId: `be-e-voting-${conf.get("mode")}-${conf.get("consumerType")}`,
     brokers: conf.get("kafka.brokers").split(","),
 };
 

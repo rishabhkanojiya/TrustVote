@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: email
-          image: rishabh75/template-email
+          image: rishabh75/e-voting-email
           envFrom:
             - configMapRef:
                 name: internal-config

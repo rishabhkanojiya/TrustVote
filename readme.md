@@ -1,3 +1,3 @@
 Replace
 
-template : app-name
+e-voting : app-name

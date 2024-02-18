@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source .env
-# export POSTGRES_BILL_SPLIT_READ_WRITE="postgres://rishabh:root@localhost:5432/be-template"
+# export POSTGRES_BILL_SPLIT_READ_WRITE="postgres://rishabh:root@localhost:5432/be-e-voting"
 
 if [[ -z "$1" ]]; then
     echo "Running PANEL Server 💃"

@@ -84,7 +84,7 @@ function getAppServer(serverType) {
     const swaggerOptions = {
         swaggerDefinition: {
             info: {
-                title: "be-template",
+                title: "be-e-voting",
                 version: "1.0.0",
                 description: "Review Service",
             },

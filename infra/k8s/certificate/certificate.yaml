@@ -2,13 +2,13 @@ apiVersion: cert-manager.io/v1
 
 kind: Certificate
 metadata:
-  name: template-app-tls
+  name: e-voting-app-tls
 spec:
-  secretName: template-app
+  secretName: e-voting-app
   issuerRef:
     name: issuer-config
     kind: ClusterIssuer
-  commonName: template.app
+  commonName: e-voting.app
   dnsNames:
-    - template.app
-    - www.template.app
+    - e-voting.app
+    - www.e-voting.app

@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: template.app
+    - host: e-voting.app
       http:
         paths:
           - path: /api/main/?(.*)

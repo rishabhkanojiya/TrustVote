@@ -1,6 +1,6 @@
 FROM node:12.19-alpine
-RUN mkdir /srv/be-template
-WORKDIR /srv/be-template
+RUN mkdir /srv/be-e-voting
+WORKDIR /srv/be-e-voting
 COPY package.json .
 COPY package-lock.json .
 RUN npm install

@@ -13,11 +13,11 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - template.app
-        - www.template.app
-      secretName: template-app
+        - e-voting.app
+        - www.e-voting.app
+      secretName: e-voting-app
   rules:
-    - host: template.app
+    - host: e-voting.app
       http:
         paths:
           - path: /api/main/?(.*)
@@ -34,7 +34,7 @@ spec:
                 name: client-svc
                 port:
                   number: 80
-    - host: www.template.app
+    - host: www.e-voting.app
       http:
         paths:
           - path: /api/main/?(.*)

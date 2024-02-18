@@ -114,7 +114,7 @@ const conf = convict({
     kafkaConsumerGroupName: {
         doc: "Kafka consumer group name",
         format: String,
-        default: "be-template-group",
+        default: "be-e-voting-group",
         env: "KAFKA_CONSUMER_GROUP_NAME",
         arg: "kafka_consumer_group_name",
     },

@@ -21,7 +21,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: "root"
             - name: POSTGRES_DB
-              value: "be-template"
+              value: "be-e-voting"
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data

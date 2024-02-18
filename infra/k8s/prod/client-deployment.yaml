@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: client
-          image: rishabh75/template-client-prod
+          image: rishabh75/e-voting-client-prod
           env:
             - name: API_URL
-              value: "https://template.app/api/main"
+              value: "https://e-voting.app/api/main"
           ports:
             - containerPort: 80
 

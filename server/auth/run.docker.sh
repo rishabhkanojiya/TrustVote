@@ -2,7 +2,7 @@
 
 set -x
 
-docker rm be-template
-docker build . -t be-template
-docker run --net=host -p $1:$1 --name=be-template --env-file ./.env \
+docker rm be-e-voting
+docker build . -t be-e-voting
+docker run --net=host -p $1:$1 --name=be-e-voting --env-file ./.env \
     be-template:latest
