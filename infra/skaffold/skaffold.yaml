@@ -21,24 +21,6 @@ kind: Config
             dest: .
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.voting
-    - &EMAIL
-      image: rishabh75/e-voting-email
-      context: ../../server/auth
-      sync:
-        manual:
-          - src: src/**/*.js
-            dest: .
-      docker:
-        dockerfile: ../Dockerfiles/Dockerfile.email
-    - &CRON
-      image: rishabh75/e-voting-email-cron
-      context: ../../server/auth
-      sync:
-        manual:
-          - src: src/**/*.js
-            dest: .
-      docker:
-        dockerfile: ../Dockerfiles/Dockerfile.cron
     - &CLIENT
       image: rishabh75/e-voting-client
       context: ../../client/
@@ -61,20 +43,14 @@ kind: Config
     DEFAULT_ARTIFACTS: &DEFAULT_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT
     DEV_ARTIFACTS: &DEV_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT
     PROD_ARTIFACTS: &PROD_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT-PROD
 
 # Default Deployment
