@@ -24,6 +24,8 @@ def create_election_candidates_table():
                 candidate_name VARCHAR NOT NULL,
                 candidate_info VARCHAR,
                 candidate_party VARCHAR,
+                candidate_type VARCHAR,
+                candidate_location VARCHAR,
                 candidate_creation_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
