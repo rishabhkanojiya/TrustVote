@@ -1,20 +1,27 @@
-$color-primary: #eb2f64;
-$color-primary-light: #ff3366;
-$color-primary-dark: #ba265d;
+$color-primary: #e75a7c;
+$color-primary-light: #eb708d;
+$color-primary-dark: #e64c70;
 
-$color-grey-light-1: #faf9f9;
-$color-grey-light-2: #f4f2f2;
-$color-grey-light-3: #f0eeee;
-$color-grey-light-4: #ccc;
+// $color-grey-dark: #1b2228;
+$color-grey-dark-light: #313131;
+$color-grey-dark: #222222;
+$color-grey-dark-dark: #13181c;
+
+$color-grey-light: #f2f5ea;
+$color-grey-light-light: #ffffff;
+$color-grey-light-dark: #eef2e3;
 
 $color-grey-dark-1: #333;
 $color-grey-dark-2: #777;
 $color-grey-dark-3: #999;
 
+$color-green-1: #222222;
+$color-red-1: #3b46f0;
+
 $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 $shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
 
-$line: 1px solid $color-grey-light-2;
+$line: 1px solid $color-grey-dark-light;
 
 $bp-largest: 75em; /* 1200px */
 $bp-large: 68.75em; /* 1100px */

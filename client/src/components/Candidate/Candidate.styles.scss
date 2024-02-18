@@ -1,0 +1,54 @@
+.candidate {
+  padding: 5rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10rem;
+
+  margin: 1rem;
+  border-radius: 2rem;
+  &_blue {
+    background-color: $color-green-1;
+  }
+
+  &_red {
+    background-color: $color-red-1;
+  }
+
+  &_data {
+    display: flex;
+    width: 100%;
+    &--img {
+      margin-right: 2rem;
+      width: 50%;
+      height: 15rem;
+
+      border-radius: 2rem;
+      object-fit: cover;
+    }
+    &--info {
+      justify-content: start;
+      .candidate_header {
+        font-size: 2rem;
+      }
+      .candidate_desc {
+        &--tweets {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+  &_trend {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 2rem;
+    &--pos {
+      font-size: 1.5rem;
+    }
+    &--neg {
+      font-size: 1.5rem;
+    }
+  }
+}

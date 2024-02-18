@@ -1,0 +1,35 @@
+.candidates {
+  display: flex;
+  margin-bottom: 1rem;
+  position: relative;
+
+  .vs {
+    &::after {
+      content: 'vs';
+      position: absolute;
+      align-self: center;
+      font-size: 8rem;
+      left: 48%;
+      top: 30%;
+      transform: skew(15deg, 15deg);
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+        'Lucida Sans', Arial, sans-serif;
+    }
+  }
+
+  .vote {
+    position: absolute;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: auto;
+    width: 15rem;
+    font-size: 1.4rem;
+    left: 45%;
+    bottom: 5%;
+    background-color: rgb(160, 238, 192);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
