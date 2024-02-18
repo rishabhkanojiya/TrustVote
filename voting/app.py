@@ -1,28 +1,18 @@
-from flask import Flask,  request, jsonify
-import psycopg2
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-from dotenv import load_dotenv
-import os
+import psycopg2
 
-load_dotenv()
-
-postgres_uri = os.getenv("POSTGRES_BILL_SPLIT_READ_WRITE")
-
-print("host", postgres_uri)
 app = Flask(__name__)
 CORS(app)
 
-def connect_db():
-    try:
-        conn = psycopg2.connect(postgres_uri)
-        print("Connected to the database successfully.")
-        return conn
-    except psycopg2.OperationalError as e:
-        print(f"Unable to connect to the database. Error: {e}")
-        raise e
+# Database connection parameters
+dbname = "be-e-voting"
+user = "postgres"
+password = "postgres"
+host = "localhost"
 
-
-conn = connect_db()
+# Connect to the database
+conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
 cursor = conn.cursor()
 
 @app.route('/create_election_candidates_table', methods=['POST'])
@@ -85,7 +75,5 @@ def create_voting_information_table():
         conn.rollback()
         return jsonify({'error': f"Error creating table 'ELECTION_CANDIDATES': {str(e)}"}), 500
 
-
-if __name__ == "__main__":
-    # Run the Flask app
-    app.run(port=9069)
+if __name__ == '__main__':
+    app.run(debug=True)
