@@ -1,53 +1,70 @@
-from flask import Flask , jsonify ,request
-from flask_cors import CORS
-import tensorflow as tf
-from tensorflow.keras.models import model_from_json
-from sklearn.preprocessing import LabelEncoder
+from flask import Flask, render_template, request, redirect, url_for
+import psycopg2
+from dotenv import load_dotenv
+import os
 
-import numpy as np
+load_dotenv()
+
+postgres_uri = os.getenv("POSTGRES_BILL_SPLIT_READ_WRITE")
+
+print("host", postgres_uri)
 app = Flask(__name__)
-CORS(app)
-
-label_encoder = LabelEncoder()
-label_encoder.classes_ = np.load('model/classes.npy')
-
-json_file = open('model/dlModel.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-loaded_model.load_weights("model/dlModel.h5")
-print("Loaded model from disk")
-# loaded_model._make_predict_function()
-
-global graph
-graph = tf.get_default_graph()
-
-from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-
-def predictValue(data):
-    data = np.array(data)
-    data = data.reshape(-1, 1)
-    data = scaler.fit_transform(data)
-    data = data.reshape(1, -1)
-    with graph.as_default():
-      pred = loaded_model.predict(data, batch_size=1, verbose=1)
-    pred = label_encoder.inverse_transform([np.argmax(pred)])
-    return pred
 
 
-@app.route('/')
-def home():
-    return jsonify({"message":"please use /predict to post a request"})
+# Connect to PostgreSQL
+def connect_db():
+    try:
+        conn = psycopg2.connect(postgres_uri)
+        print("Connected to the database successfully.")
+        return conn
+    except psycopg2.OperationalError as e:
+        print(f"Unable to connect to the database. Error: {e}")
+        raise e
 
-@app.route('/predict',methods = ['POST'])
-def predict():
-    
-    if request.method == 'POST': 
-        req = request.get_json()
-        data = req['array']
-        result = predictValue(data)
-        return jsonify({'message':result.tolist()})
 
+# Initialize the database table
+def init_db():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tasks (
+            id SERIAL PRIMARY KEY,
+            description TEXT NOT NULL
+        )
+    """
+    )
+    conn.commit()
+    conn.close()
+
+
+# Home route to display tasks
+@app.route("/")
+def index():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM tasks ORDER BY id")
+    tasks = cursor.fetchall()
+    conn.close()
+    return render_template("index.html", tasks=tasks)
+
+
+# Add new task route
+@app.route("/add", methods=["POST"])
+def add():
+    new_task = request.form["task"]
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO tasks (description) VALUES (%s)", (new_task,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("index"))
+
+
+# Run the application
 if __name__ == "__main__":
-    app.run()
+    # Initialize the database
+    init_db()
+
+    # Run the Flask app
+    app.run(debug=True)

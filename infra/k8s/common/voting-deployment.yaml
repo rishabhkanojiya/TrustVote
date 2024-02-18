@@ -17,7 +17,7 @@ spec:
           image: rishabh75/e-service-voting
           envFrom:
             - configMapRef:
-                name: voting-config
+                name: internal-config
             - secretRef:
                 name: common-secrets
           env:
@@ -37,5 +37,5 @@ spec:
   ports:
     - name: voting
       protocol: TCP
-      port: 9069
-      targetPort: 9069
+      port: 5000
+      targetPort: 5000
