@@ -189,21 +189,6 @@ def bulk_insert_election():
         conn.rollback()
         return jsonify({'error': f"Error inserting records into 'ELECTION': {str(e)}"}), 500
 
-@app.route('/bulk_insert_voting_information', methods=['POST'])
-def bulk_insert_voting_information():
-    records = request.json  # Expecting a list of records from request body
-    sql_query = '''
-        INSERT INTO VOTING_INFORMATION (voter_ssn, voting_election_id, voting_candidate_id)
-        VALUES (%s, %s, %s)
-    '''
-    try:
-        cursor.executemany(sql_query, [(rec['voter_ssn'], rec['voting_election_id'], rec['voting_candidate_id']) for rec in records])
-        conn.commit()
-        return jsonify({'message': f'{len(records)} records inserted successfully into VOTING_INFORMATION'}), 200
-    except Exception as e:
-        conn.rollback()
-        return jsonify({'error': f"Error inserting records into 'VOTING_INFORMATION': {str(e)}"}), 500
-
 
 # Get Request
 @app.route('/get_election_candidates', methods=['GET'])
