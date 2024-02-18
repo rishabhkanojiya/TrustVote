@@ -1,71 +1,36 @@
-from flask import Flask , jsonify ,request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
-# import tensorflow as tf
-# from tensorflow.keras.models import model_from_json
-# from sklearn.preprocessing import LabelEncoder
 
-import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-
-
 # Database connection parameters
 dbname = "be-e-voting"
-user = "vishal"
-password = "12345678"
+user = "postgres"
+password = "postgres"
 host = "localhost"
 
 # Connect to the database
 conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
+cursor = conn.cursor()
 
-# label_encoder = LabelEncoder()
-# label_encoder.classes_ = np.load('model/classes.npy')
-#
-# json_file = open('model/dlModel.json', 'r')
-# loaded_model_json = json_file.read()
-# json_file.close()
-# loaded_model = model_from_json(loaded_model_json)
-# loaded_model.load_weights("model/dlModel.h5")
-# print("Loaded model from disk")
-# # loaded_model._make_predict_function()
-#
-# global graph
-# graph = tf.get_default_graph()
-#
-# from sklearn.preprocessing import StandardScaler
-# scaler = StandardScaler()
-#
-# def predictValue(data):
-#     data = np.array(data)
-#     data = data.reshape(-1, 1)
-#     data = scaler.fit_transform(data)
-#     data = data.reshape(1, -1)
-#     with graph.as_default():
-#       pred = loaded_model.predict(data, batch_size=1, verbose=1)
-#     pred = label_encoder.inverse_transform([np.argmax(pred)])
-#     return pred
-#
-#
-# @app.route('/')
-# def home():
-#     return jsonify({"message":"please use /predict to post a request"})
-#
-# @app.route('/predict',methods = ['POST'])
-# def predict():
-#
-#     if request.method == 'POST':
-#         req = request.get_json()
-#         data = req['array']
-#         result = predictValue(data)
-#         return jsonify({'message':result.tolist()})
-#
-# if __name__ == "__main__":
-#     app.run()
-#
-#
-# #display home page
-# #-> country -> state -> city
-#
-# #vote now
+@app.route('/create_table_election_candidates', methods=['POST'])
+def create_table_election_candidates():
+    try:
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS ELECTION_CANDIDATES (
+                candidate_id SERIAL PRIMARY KEY,
+                candidate_name VARCHAR NOT NULL,
+                candidate_info VARCHAR,
+                candidate_creation_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+        return jsonify({'message': 'Table created successfully'}), 200
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'error': f"Error creating table 'ELECTION_CANDIDATES': {str(e)}"}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
