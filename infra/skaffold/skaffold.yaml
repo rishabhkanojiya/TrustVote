@@ -61,20 +61,14 @@ kind: Config
     DEFAULT_ARTIFACTS: &DEFAULT_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT
     DEV_ARTIFACTS: &DEV_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT
     PROD_ARTIFACTS: &PROD_ARTIFACTS
       - *INTERNAL
       - *VOTING
-      - *EMAIL
-      - *CRON
       - *CLIENT-PROD
 
 # Default Deployment

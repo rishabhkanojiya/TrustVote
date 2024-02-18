@@ -1,22 +1,23 @@
 {
-  "author": {
-    "name": "Rishabh Kanojiya"
-  },
-  "keywords": [
-    "react",
-    "reactjs",
-    "webpack",
-    "boilerplate"
-  ],
-  "license": "MIT",
-  "name": "react-webpack-boilerplate",
-  "version": "1.0.1",
-  "description": "Webpack 6 boilerplate with React 17, using babel, sass, with HMR and an optimized production build",
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.2",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.3",
+    "axios": "^1.4.0",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.44.3",
+    "react-router-dom": "^5.3.4",
+    "react-scripts": "5.0.1",
+    "styled-components": "^6.0.0-rc.3",
+    "web-vitals": "^2.1.4"
   },
-  "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": "webpack serve --config config/webpack.dev.js",
@@ -32,6 +33,27 @@
     "hooks": {
       "pre-commit": "yarn lint-staged --verbose"
     }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "lint-staged": {
     "*.{js,jsx}": [
