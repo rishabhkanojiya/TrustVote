@@ -21,8 +21,12 @@ const AuthGuard = ({
   const fetchUser = async () => {
     try {
       const userRes = await UserService.getUser()
+      console.log('userRes:', userRes)
 
       const user = await LoginData.setUserObj(userRes.data.user)
+      console.log('user:', user)
+
+      history.push('/')
     } catch (err) {
       history.push('/auth/login')
       ShowPopupData.setPopupMessageObj(err.response.data, 'error')
@@ -48,7 +52,7 @@ const AuthGuard = ({
       render={(props) =>
         LoginData?.data?._id ? (
           <>
-            <Navbar fwdRef={navHeightref} />
+            {/* <Navbar fwdRef={navHeightref} /> */}
             <Box
               // sx={{ paddingBottom: `${navHeightref?.current?.clientHeight}px` }}
               sx={{ paddingBottom: `56px` }}

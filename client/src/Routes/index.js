@@ -12,18 +12,17 @@ const routes = [
     requiresAuth: false,
     exact: false,
   },
-
-  // {
-  //   path: routesObj.home,
-  //   component: CanInfo,
-  //   requiresAuth: false,
-  //   exact: false,
-  // },
+  {
+    path: routesObj.home,
+    component: CanInfo,
+    requiresAuth: true,
+    exact: true,
+  },
   {
     path: routesObj.vote,
     component: Vote,
-    requiresAuth: false,
-    exact: false,
+    requiresAuth: true,
+    exact: true,
   },
 ]
 

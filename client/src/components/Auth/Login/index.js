@@ -28,6 +28,8 @@ const Login = ({ ShowPopupData, LoginData }) => {
   const onSubmit = async (data) => {
     try {
       const result = await AuthService.login(data)
+
+      history.push('/')
     } catch (err) {
       ShowPopupData.setPopupMessageObj(err.response.data, 'error')
     }
