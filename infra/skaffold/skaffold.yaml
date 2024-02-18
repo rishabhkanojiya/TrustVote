@@ -12,6 +12,15 @@ kind: Config
             dest: .
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.main
+    - &VOTING
+      image: rishabh75/e-service-voting
+      context: ../../server/voting
+      sync:
+        manual:
+          - src: ./**/*.py
+            dest: .
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.voting
     - &EMAIL
       image: rishabh75/e-voting-email
       context: ../../server/auth
@@ -51,16 +60,19 @@ kind: Config
   COMMON_ARTIFACTSETS:
     DEFAULT_ARTIFACTS: &DEFAULT_ARTIFACTS
       - *INTERNAL
+      - *VOTING
       - *EMAIL
       - *CRON
       - *CLIENT
     DEV_ARTIFACTS: &DEV_ARTIFACTS
       - *INTERNAL
+      - *VOTING
       - *EMAIL
       - *CRON
       - *CLIENT
     PROD_ARTIFACTS: &PROD_ARTIFACTS
       - *INTERNAL
+      - *VOTING
       - *EMAIL
       - *CRON
       - *CLIENT-PROD

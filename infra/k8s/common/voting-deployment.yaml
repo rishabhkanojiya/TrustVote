@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voting
+  template:
+    metadata:
+      labels:
+        app: voting
+    spec:
+      containers:
+        - name: voting
+          image: rishabh75/e-service-voting
+          envFrom:
+            - configMapRef:
+                name: voting-config
+            - secretRef:
+                name: common-secrets
+          env:
+            - name: MODE
+              value: "server"
+            - name: SERVER_TYPE
+              value: "voting"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting-svc
+spec:
+  selector:
+    app: voting
+  ports:
+    - name: voting
+      protocol: TCP
+      port: 9069
+      targetPort: 9069

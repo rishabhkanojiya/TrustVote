@@ -13,11 +13,18 @@ spec:
     - host: e-voting.app
       http:
         paths:
-          - path: /api/main/?(.*)
+          - path: /api/auth/?(.*)
             pathType: ImplementationSpecific
             backend:
               service:
                 name: internal-svc
+                port:
+                  number: 9069
+          - path: /api/voting/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: voting-svc
                 port:
                   number: 9069
           - path: /?(.*)

@@ -1,0 +1,16 @@
+FROM python:3.9
+
+RUN mkdir /srv/be-service-voting
+WORKDIR /srv/be-service-voting
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 9069
+
+ENV NAME World
+
+COPY . .
+
+RUN echo "Running Main Dockerfile"
+CMD ["python", "app.py"]
